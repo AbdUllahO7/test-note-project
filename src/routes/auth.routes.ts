@@ -10,3 +10,4 @@ router.post('/register', validateBody(registerSchema), authController.register);
 router.post('/login', loginRateLimiter, validateBody(loginSchema), authController.login);
 
 export default router;
+

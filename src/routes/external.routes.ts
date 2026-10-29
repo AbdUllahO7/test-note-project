@@ -10,3 +10,4 @@ router.use(authenticate);
 router.get('/rates', externalController.getExchangeRates);
 
 export default router;
+

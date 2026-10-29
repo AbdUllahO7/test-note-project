@@ -16,3 +16,4 @@ router.put('/:id', validateParams(noteIdParamSchema), validateBody(updateNoteSch
 router.delete('/:id', validateParams(noteIdParamSchema), notesController.deleteNote);
 
 export default router;
+

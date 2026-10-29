@@ -52,3 +52,4 @@ describe('External Integration Endpoints (/api/external)', () => {
     expect(res.body.data.conversion_rates.EUR).toBeDefined();
   });
 });
+

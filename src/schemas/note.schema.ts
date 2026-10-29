@@ -27,3 +27,4 @@ export const noteIdParamSchema = z.object({
 
 export type CreateNoteInput = z.infer<typeof createNoteSchema>;
 export type UpdateNoteInput = z.infer<typeof updateNoteSchema>;
+

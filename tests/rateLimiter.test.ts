@@ -40,3 +40,4 @@ describe('Rate Limiter Middleware', () => {
     expect(r4.body.message).toMatch(/Too many attempts/i);
   });
 });
+

@@ -19,3 +19,4 @@ router.use('/notes', notesRoutes);
 router.use('/external', externalRoutes);
 
 export default router;
+

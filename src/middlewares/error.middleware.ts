@@ -66,3 +66,4 @@ export const errorHandler = (
     ...(env.NODE_ENV === 'development' ? { stack: err.stack, details: err.message } : {})
   });
 };
+

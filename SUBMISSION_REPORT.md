@@ -89,3 +89,4 @@
    استخدام Redis لتخزين نتائج الـ API الخارجي مؤقتاً (Caching) لتقليل زمن الاستجابة وتفادي قيود الـ Rate Limit لمزودي البيانات الخارجيين، ونقل الـ Rate Limiter إلى Redis ليعمل بكفاءة عبر خوادم متعددة (Distributed Load-balanced Instances).
 4. **حاوية Docker & Docker Compose**:
    إعداد `Dockerfile` متعدد المراحل (Multi-stage build) لتقليل حجم الصورة وجعل نشر المشروع على بيئات الإنتاج مثل AWS/GCP/Railway يتم بنقرة واحدة.
+

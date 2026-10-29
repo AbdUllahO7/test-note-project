@@ -312,3 +312,4 @@ Opens in your browser at `http://localhost:5555`.
 
 ## 📄 License
 ISC License. Built for Autoaimagix Technical Assessment.
+
