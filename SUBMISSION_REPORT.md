@@ -8,8 +8,7 @@
 ---
 
 ### رابط GitHub:
-*(يرجى وضع رابط المستودع بعد رفعه على حساب GitHub الخاص بك)*  
-`https://github.com/<YOUR_USERNAME>/notes-saas-api`
+https://github.com/AbdUllahO7/test-note-project
 
 ---
 
