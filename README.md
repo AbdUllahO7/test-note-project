@@ -30,6 +30,13 @@ A production-ready, secure RESTful API built for modern SaaS applications. Featu
   - 100% passing automated test suite (**24 unit & integration tests**) with **Jest** and **Supertest**.
   - Database powered by **Prisma ORM** with **SQLite** for zero-friction local setup (no external DB container needed).
 
+- 🖥️ **Interactive Web Dashboard (UI)**:
+  - Built-in, responsive SaaS Dashboard accessible directly in your browser at `http://localhost:4000/`.
+  - **1-Click Test Logins** to quickly switch between `Admin`, `Alice`, and `Bob`.
+  - Live Notes CRUD management with visual ownership badges.
+  - Interactive Financial Exchange Rates widget.
+  - Visual verification of RBAC permissions and IDOR isolation.
+
 ---
 
 ## 🛠 Tech Stack
