@@ -3,6 +3,7 @@ import app from '../src/app';
 import { prisma } from '../src/config/db';
 import bcrypt from 'bcryptjs';
 import { Role } from '../src/types/role';
+import { seedDatabaseIfEmpty } from '../src/services/seed.service';
 
 describe('Notes Endpoints (/api/notes)', () => {
   let user1Token: string;
@@ -71,6 +72,7 @@ describe('Notes Endpoints (/api/notes)', () => {
   afterAll(async () => {
     await prisma.note.deleteMany();
     await prisma.user.deleteMany();
+    await seedDatabaseIfEmpty();
     await prisma.$disconnect();
   });
 

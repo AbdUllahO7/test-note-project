@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from '../src/app';
 import { prisma } from '../src/config/db';
+import { seedDatabaseIfEmpty } from '../src/services/seed.service';
 
 describe('Auth Endpoints (/api/auth)', () => {
   beforeAll(async () => {
@@ -12,6 +13,8 @@ describe('Auth Endpoints (/api/auth)', () => {
   afterAll(async () => {
     await prisma.note.deleteMany();
     await prisma.user.deleteMany();
+    // Restore default seeded users for local UI testing
+    await seedDatabaseIfEmpty();
     await prisma.$disconnect();
   });
 

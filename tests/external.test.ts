@@ -3,6 +3,7 @@ import app from '../src/app';
 import { prisma } from '../src/config/db';
 import bcrypt from 'bcryptjs';
 import { Role } from '../src/types/role';
+import { seedDatabaseIfEmpty } from '../src/services/seed.service';
 
 describe('External Integration Endpoints (/api/external)', () => {
   let authToken: string;
@@ -30,6 +31,7 @@ describe('External Integration Endpoints (/api/external)', () => {
   afterAll(async () => {
     await prisma.note.deleteMany();
     await prisma.user.deleteMany();
+    await seedDatabaseIfEmpty();
     await prisma.$disconnect();
   });
 

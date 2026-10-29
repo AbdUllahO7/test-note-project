@@ -59,20 +59,48 @@
         </div>
 
         <!-- Quick 1-Click Login Shortcuts for Evaluator -->
-        <div class="mb-6 bg-slate-900/80 p-4 rounded-xl border border-slate-700/60">
-          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-            ⚡ Quick Test Logins (Click to autofill)
-          </p>
+        <div class="mb-6 bg-slate-900/90 p-4 rounded-xl border border-slate-700/80 shadow-inner">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+              <span>⚡ 1-Click Instant Login</span>
+            </p>
+            <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+              Click to Sign In
+            </span>
+          </div>
+
           <div class="grid grid-cols-3 gap-2 text-xs">
-            <button onclick="autofill('admin@example.com', 'Admin12345!')" class="py-2 px-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-lg font-medium transition text-center truncate">
-              👑 Admin
+            <!-- Admin -->
+            <button type="button" onclick="quickLogin('admin@example.com', 'Admin12345!', 'Admin')" class="py-2.5 px-2 bg-purple-500/15 hover:bg-purple-500/25 active:scale-95 text-purple-200 border border-purple-500/30 rounded-xl font-bold transition flex flex-col items-center gap-0.5 text-center shadow-sm">
+              <span class="text-base">👑</span>
+              <span class="text-xs">Admin</span>
+              <span class="text-[10px] text-purple-300/80 font-normal truncate max-w-full">admin@...</span>
             </button>
-            <button onclick="autofill('alice@example.com', 'User12345!')" class="py-2 px-2 bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-lg font-medium transition text-center truncate">
-              👤 Alice
+
+            <!-- Alice -->
+            <button type="button" onclick="quickLogin('alice@example.com', 'User12345!', 'Alice')" class="py-2.5 px-2 bg-indigo-500/15 hover:bg-indigo-500/25 active:scale-95 text-indigo-200 border border-indigo-500/30 rounded-xl font-bold transition flex flex-col items-center gap-0.5 text-center shadow-sm">
+              <span class="text-base">👤</span>
+              <span class="text-xs">Alice</span>
+              <span class="text-[10px] text-indigo-300/80 font-normal truncate max-w-full">alice@...</span>
             </button>
-            <button onclick="autofill('bob@example.com', 'User12345!')" class="py-2 px-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg font-medium transition text-center truncate">
-              👤 Bob
+
+            <!-- Bob -->
+            <button type="button" onclick="quickLogin('bob@example.com', 'User12345!', 'Bob')" class="py-2.5 px-2 bg-cyan-500/15 hover:bg-cyan-500/25 active:scale-95 text-cyan-200 border border-cyan-500/30 rounded-xl font-bold transition flex flex-col items-center gap-0.5 text-center shadow-sm">
+              <span class="text-base">👤</span>
+              <span class="text-xs">Bob</span>
+              <span class="text-[10px] text-cyan-300/80 font-normal truncate max-w-full">bob@...</span>
             </button>
+          </div>
+
+          <div class="mt-3 pt-2.5 border-t border-slate-800 text-[11px] text-slate-400 space-y-1">
+            <div class="flex items-center justify-between">
+              <span>Admin: <code class="text-slate-300">admin@example.com</code></span>
+              <span class="text-slate-500">Pass: <code class="text-slate-400">Admin12345!</code></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Users: <code class="text-slate-300">alice / bob@example.com</code></span>
+              <span class="text-slate-500">Pass: <code class="text-slate-400">User12345!</code></span>
+            </div>
           </div>
         </div>
 
@@ -333,12 +361,47 @@
       }
     }
 
-    // Autofill helper
-    function autofill(email, password) {
+    // Quick 1-Click Login Helper
+    async function quickLogin(email, password, roleName = 'User') {
       switchAuthTab('login');
       document.getElementById('authEmail').value = email;
       document.getElementById('authPassword').value = password;
-      showToast(`Autofilled credentials for ${email}`, 'success');
+      showToast(`Signing in as ${roleName} (${email})...`, 'success');
+
+      const submitBtn = document.getElementById('authSubmitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = `Signing in as ${roleName}...`;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || (data.errors ? data.errors[0].message : 'Login failed'));
+        }
+
+        currentToken = data.data.token;
+        currentUser = data.data.user;
+        localStorage.setItem('notes_auth_token', currentToken);
+        localStorage.setItem('notes_auth_user', JSON.stringify(currentUser));
+
+        showToast(`Logged in successfully as ${currentUser.email}!`, 'success');
+        setupDashboard();
+      } catch (err) {
+        showToast(err.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign In';
+      }
+    }
+
+    // Autofill alias
+    function autofill(email, password, roleName = 'User') {
+      quickLogin(email, password, roleName);
     }
 
     // Auth Submit
@@ -591,3 +654,4 @@
   </script>
 </body>
 </html>
+
